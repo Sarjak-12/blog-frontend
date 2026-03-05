@@ -12,8 +12,14 @@ import api, { configureApiAuth, publicApi } from "../api/client";
 
 const AuthContext = createContext(null);
 
-const extractErrorMessage = (error, fallback) =>
-  error.response?.data?.message || fallback;
+const extractErrorMessage = (error, fallback) => {
+  if (!error.response) {
+    return "Could not reach API server";
+  }
+
+  const firstDetail = error.response?.data?.details?.[0]?.message;
+  return firstDetail || error.response?.data?.message || fallback;
+};
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);

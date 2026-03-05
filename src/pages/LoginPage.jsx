@@ -22,8 +22,12 @@ const LoginPage = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await login(form);
-    navigate(from, { replace: true });
+    try {
+      await login(form);
+      navigate(from, { replace: true });
+    } catch (error) {
+      // Toast is handled in AuthContext.
+    }
   };
 
   return (

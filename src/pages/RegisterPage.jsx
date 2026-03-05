@@ -20,8 +20,12 @@ const RegisterPage = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await register(form);
-    navigate("/", { replace: true });
+    try {
+      await register(form);
+      navigate("/", { replace: true });
+    } catch (error) {
+      // Toast is handled in AuthContext.
+    }
   };
 
   return (
